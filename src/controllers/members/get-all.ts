@@ -13,11 +13,11 @@ const getAllMembers = async (req: Request, res: Response, next: NextFunction) =>
         $addFields: {
           followers: { $size: { "$ifNull": ["$followers", []] } },
           followings: { $size: { "$ifNull": ["$followings", []] } },
-        }
+        },
       },
       {
-        $sort: { "followers": -1 }
-      }
+        $sort: { followers: -1 },
+      },
     ]).exec();
 
     const responseMembers: any[] = members.map((member: any) => {
@@ -38,7 +38,7 @@ const getAllMembers = async (req: Request, res: Response, next: NextFunction) =>
     const message = 'Error when get all members';
     logger.error(message, { params: req.params, error: `${error}` });
     return next(createError(500, message + `${error}`));
-  };
+  }
 };
 
 export default getAllMembers;

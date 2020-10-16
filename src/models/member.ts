@@ -13,17 +13,17 @@ const MemberSchema = new Schema({
   followers: [{
     username: { type: String },
     followAt: { type: Date },
-    _id: false
+    _id: false,
   }],
   followings: [{
     username: { type: String },
     followAt: { type: Date },
-    _id: false
+    _id: false,
   }],
   isDeleted: { type: Boolean, default: false, index: true },
   createdAt: { type: Date, default: moment().format() },
 }, {
-  collection: "member",
+  collection: 'member',
   toJSON: {
     virtuals: true,
     versionKey: false,
@@ -31,8 +31,8 @@ const MemberSchema = new Schema({
       member.id = member._id;
       delete member._id;
       delete member.isDeleted;
-    }
-  }
+    },
+  },
 });
 
 const Member = mongoose.model('Member', MemberSchema);
