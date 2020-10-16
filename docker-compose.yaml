@@ -1,0 +1,30 @@
+version: '3'
+services:
+  mongo:
+    image: mongo:4.2
+    volumes:
+      - mongo:/data/db
+    ports:
+      - ${DOCKER_MONGO_PORT}:27017
+
+  member-svc-dev:
+    build: .
+    ports: 
+      - ${APP_PORT}:${APP_PORT}
+    volumes:
+      - /var/log/dev/member-svc:/usr/src/app/logs
+    depends_on:
+      - mongo
+    environment:
+      DATABASE_URL: mongodb://mongo:27017
+      DATABASE_NAME: ${DATABASE_NAME}
+
+volumes:
+  mongo:
+
+  #     DATABASE_URL: mongodb://root:vbfKsJJEg0rpFpPK62pnswvl9pkXDCS8@mongo.db:27017/admin
+  # DATABASE_NAME: pointpos
+
+  # MONGO_INITDB_ROOT_USERNAME: root
+  # MONGO_INITDB_ROOT_PASSWORD: vbfKsJJEg0rpFpPK62pnswvl9pkXDCS8
+  # MONGO_INITDB_DATABASE: pointpos
